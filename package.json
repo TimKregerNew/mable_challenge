@@ -11,6 +11,9 @@
   "dependencies": {
     "csv": "^6.3.5",
     "jest-cli": "^29.7.0",
-    "sqlite": "^5.1.1"
+    "lorem-ipsum": "^2.0.8",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
   }
 }

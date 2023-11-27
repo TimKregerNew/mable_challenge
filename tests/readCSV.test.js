@@ -1,4 +1,4 @@
-const { csvReader } = require("../data/readCSV")
+const { csvReader } = require("../data/ReadCsv")
 
 
 test("array is valid", async () => {

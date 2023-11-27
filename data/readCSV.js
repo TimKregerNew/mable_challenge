@@ -9,7 +9,7 @@ class csvReader {
  
     printList() {
        this.csvList.forEach(function(entry){
-            console.log(entry)
+           console.log(entry)
         })
     }
 
@@ -20,15 +20,12 @@ class csvReader {
             fileStream.createReadStream(path) 
             .pipe(parse({ delimiter: ",", from_line: 1}))
             .on("data", function (row) {
-                console.log(row)
                 self.csvList.push(row)
             })
             .on("end", function () {
-                console.log("finished");
                 resolve();
             })
             .on("error", function (error) {
-                console.log(error.message);
                 reject()
             });
 
