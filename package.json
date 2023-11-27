@@ -4,12 +4,13 @@
   "description": "Code challenge for Mable",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "author": "Tim Kreger",
   "license": "ISC",
   "dependencies": {
     "csv": "^6.3.5",
+    "jest-cli": "^29.7.0",
     "sqlite": "^5.1.1"
   }
 }
