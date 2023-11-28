@@ -25,4 +25,4 @@ class UserAccount {
 
 }
 
-module.exports = {UserAccount, TransactionStatus}
+module.exports = {UserAccount}

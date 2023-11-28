@@ -32,8 +32,10 @@ class DataBase {
             self.db.run(
                 'CREATE TABLE IF NOT EXISTS user_account (id INT, balance FLOAT)', (err) => {
                     if(err) {
+                        console.log(err.message)
                         reject()
                     }
+                    console.log('success')
                     resolve()
                 }
             )
@@ -65,8 +67,10 @@ class DataBase {
             self.db.run(
                 'INSERT INTO user_account (id, balance) VALUES (1, 500.0)', (err) => {
                     if(err) {
+                        console.log(err.message)
                         reject()
                     }
+                    console.log('success')
                     resolve()
                 }
             )
@@ -76,7 +80,7 @@ class DataBase {
     async dumpValues() {
         const self = this
         return new Promise(function(resolve, reject) { 
-            self.db.run(
+            self.db.all(
                 'SELECT * FROM user_account', (err, data) => {
                     if(err) {
                         reject()
@@ -86,5 +90,18 @@ class DataBase {
             )
         })
     }
+
+    closeDb() {
+        this.db.close()
+    }
 }
 module.exports = { DataBase }
+/*
+var db = new DataBase('./test.db')
+
+db.init()
+db.createUserTable()
+db.insertValue()
+db.dumpValues()
+db.closeDb()
+*/
