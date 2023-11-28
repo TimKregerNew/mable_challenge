@@ -24,6 +24,14 @@ class AccountLoader {
             self.accounts.push(account)
          })
     }
+
+    getAccountById(id) {
+        const account = this.accounts.find(acc => acc.id === id)
+        if(account === undefined) {
+            return null
+        }
+        return account
+    }
 }
 
 module.exports = { AccountLoader, UserEntry}
