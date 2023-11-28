@@ -9,12 +9,13 @@ const UserEntry = {
 class AccountLoader {
     path;
     accounts;
-    constructor(path) {
+    constructor() {
         this.path = path
         this.accounts = new Array()
     }
 
     async loadAccounts(path) {
+        this.path = path
         const self = this
         const reader = new csvReader()
         await reader.readCSV(path)
