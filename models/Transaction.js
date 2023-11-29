@@ -9,17 +9,31 @@ class Transaction {
     id;
     from;
     to;
-    ammount;
+    amount;
     status;
 
-    constructor(from, to, ammount) {
+    constructor(from, to, amount) {
         this.id = uuidv4() 
         this.from = from
         this.to = to
-        this.ammount = ammount
+        this.amount = amount
         this.status = TransactionStatus.Pending
 
         return this.id
+    }
+
+    print() {
+        console.log("ID: "  + this.id + " FROM: " + this.from.id +  " TO: " + this.to.id + " AMOUNT: " + this.amount + " STATUS: " + this.status)
+    }
+
+    toJson() {
+        return {
+            'id' : this.id,
+            'from': this.from.id,
+            'to': this.to.id,
+            'amount': this.amount,
+            'status': this.status
+        }
     }
 }
 

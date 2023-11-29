@@ -1,34 +1,38 @@
 const { Transaction, TransactionStatus } = require("../models/Transaction")
 const { csvReader } = require("../data/ReadCsv")
 
-const PaymentEntry = {
+const TransactionEntry = {
     from: 0,
     to: 1,
-    amount: 3
+    amount: 2
 }
 
 
 class TransactionLoader {
     path;
-    payments;
+    transactions;
         constructor() {
-            this.payments = new Array()
+            this.transactions = new Array()
         }
 
-        async loadPayments(path) {
+        async loadPayments(path, accountLoader) {
             this.path = path
             const self = this
             const reader = new csvReader()
+            const loader = accountLoader
             await reader.readCSV(path)
 
-            reader.csvList.forEach(function(entry){
-                const transaction = new Transaction(parseInt(entry[PaymentEntry.to]), parseInt(entry[PaymentEntry.from]), parseFloat(entry[PaymentEntry.amount]))
-                self.payments.push(transaction)
+            reader.csvList.forEach(function(entry){ 
+                const fromUser = accountLoader.getAccountById(parseInt(entry[TransactionEntry.from]))
+                const toUser = accountLoader.getAccountById(parseInt(entry[TransactionEntry.to]))
+                const amount = parseFloat(entry[TransactionEntry.amount])
+                const transaction = new Transaction(fromUser, toUser, amount )
+                self.transactions.push(transaction)
              })
         }
 
         getPaymentById(id) {
-            const account = this.payments.find(pay => pay.id === id)
+            const account = this.transactions.find(pay => pay.id === id)
             if(account === undefined) {
                 return null
             }
@@ -40,7 +44,7 @@ class TransactionLoader {
         }
 
         printTransactions() {
-            this.payments.forEach(function(entry) {
+            this.transactions.forEach(function(entry) {
                 printTransactionStatus(entry)
             })
         }

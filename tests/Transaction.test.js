@@ -17,6 +17,6 @@ test("values are correct", () => {
 
     expect(transaction.from.id).toBe(1234)
     expect(transaction.to.id).toBe(4555)
-    expect(transaction.ammount).toBe(500.0)
+    expect(transaction.amount).toBe(500.0)
     expect(transaction.status).toBe(TransactionStatus.Pending)
 })

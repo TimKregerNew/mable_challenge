@@ -2,14 +2,16 @@ const { PaymentProcessor } = require("./processors/PaymentProcessor");
 const { TransactionLoader } = require("./processors/TransactionLoader");
 
 
-function main() {
+async function main() {
     const paymentprocessor = new PaymentProcessor()
 
-    paymentprocessor.process(process.argv[2], process.argv[3] )
-    
-    paymentprocessor.transactionLoader.printTransactions()
-
-
+    await paymentprocessor.process(process.argv[2], process.argv[3] )
+    console.log("ACCCOUNTS \n")
+    paymentprocessor.printAccounts()
+    console.log("\n\TRANSACTIONS \n")
+    paymentprocessor.printTransactions()
+    await paymentprocessor.outputTransactions(process.argv[4])
+    await paymentprocessor.outputAccounts(process.argv[5])
 }
 
 main()

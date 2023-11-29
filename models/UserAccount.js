@@ -23,6 +23,16 @@ class UserAccount {
         }
     }
 
+    print() {
+        console.log("ID: "  + this.id + " BALANCE: " + this.balance)
+    }
+    toJson() {
+        return {
+            'id' : this.id,
+            'balance': this.balance,
+        }
+    }
+
 }
 
 module.exports = {UserAccount}

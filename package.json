@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "csv": "^6.3.5",
+    "csv-writer": "^1.6.0",
     "jest-cli": "^29.7.0",
     "lorem-ipsum": "^2.0.8",
     "sqlite": "^5.1.1",
