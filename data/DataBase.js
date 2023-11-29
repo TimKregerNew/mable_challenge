@@ -2,6 +2,8 @@ var sqlite3 = require('sqlite3');
 const fs = require("fs");
 const { isNull } = require('util');
 const { resolve } = require('path');
+// This class never gets used, I couldn't the db to work. 
+// There is a test sequence at the bottom.
 
 class DataBase {
     db;
@@ -43,24 +45,7 @@ class DataBase {
     
 
     }
-        /*
-        this.db.run(
-            'INSERT INTO user_account(id, balance) VALUES(1, 500.0)', ['C'], (err) => {
-                if(err) {
-                    return console.log(err.message);
-                }
-            } 
-        )
 
-        this.db.all("SELECT * FROM user_account", function(err,rows){
-            console.log("got it")
-        rows.array.forEach(element => {
-            console.log("hi")
-        });
-        });
-        resolve()
-        */
-    
     async insertValue() {
         const self = this
         return new Promise(function(resolve, reject) { 
@@ -96,12 +81,17 @@ class DataBase {
     }
 }
 module.exports = { DataBase }
-/*
-var db = new DataBase('./test.db')
 
-db.init()
-db.createUserTable()
-db.insertValue()
-db.dumpValues()
-db.closeDb()
+/*
+async function test() {
+    var db = new DataBase('./test.db')
+
+    await db.init()
+    await db.createUserTable()
+    await db.insertValue()
+    await db.dumpValues()
+    await db.closeDb()
+}
+
+test()
 */
