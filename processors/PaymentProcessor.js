@@ -1,17 +1,22 @@
-const { Transaction, TransactionStatus } = require("../models/Transaction")
-const { UserAccount } = require("../models/UserAccount")
+const { AccountLoader } = require("./AccountLoader");
+const { TransactionLoader } = require("./TransactionLoader");
+const { Payment } = require('../models/Payment')
 
 class PaymentProcessor {
-   
-    processPayment(transaction) {
-        const ammount = transaction.ammount
-        const status = transaction.from.withdraw(ammount)
+   transactionLoader;
+   accountLoader;
+    constructor(accountsPath, transactionPath) {
+        this.transactionLoader = new TransactionLoader()
+        this.accountLoader = new AccountLoader()
+    }
 
-        if(status == TransactionStatus.Success) {
-            transaction.to.deposit(ammount)
-        }
-        
-        transaction.status = status
+    async process(accountsPath, transactionPath) {
+        const self = this
+        self.transactionLoader.loadPayments(transactionPath)
+        self.accountLoader.loadAccounts(accountsPath)
+        self.transactionLoader.payments.forEach(function(trans) {
+            self.process(trans)
+        });
     }
 }
 

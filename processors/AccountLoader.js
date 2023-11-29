@@ -10,7 +10,6 @@ class AccountLoader {
     path;
     accounts;
     constructor() {
-        this.path = path
         this.accounts = new Array()
     }
 

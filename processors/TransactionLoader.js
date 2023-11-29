@@ -34,6 +34,16 @@ class TransactionLoader {
             }
             return account
         }
+
+        printTransactionStatus(transaction) {
+            console.log("TransactionID " + transaction.id + " Status " + transaction.status)
+        }
+
+        printTransactions() {
+            this.payments.forEach(function(entry) {
+                printTransactionStatus(entry)
+            })
+        }
 }
 
 module.exports = {TransactionLoader}
