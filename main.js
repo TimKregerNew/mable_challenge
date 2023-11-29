@@ -10,8 +10,9 @@ async function main() {
     paymentprocessor.printAccounts()
     console.log("\n\TRANSACTIONS \n")
     paymentprocessor.printTransactions()
-    await paymentprocessor.outputTransactions(process.argv[4])
-    await paymentprocessor.outputAccounts(process.argv[5])
+   
+    await paymentprocessor.outputAccounts(process.argv[4])
+    await paymentprocessor.outputTransactions(process.argv[5])
 }
 
 main()

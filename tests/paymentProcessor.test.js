@@ -7,7 +7,6 @@ const { PaymentProcessor } = require("../processors/PaymentProcessor")
 test("success if transaction successful", async () => {
     const processor = new PaymentProcessor()
     await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
-    processor.print()
     expect(processor.accountLoader.accounts.length).toBe(5)
     expect(processor.transactionLoader.transactions.length).toBe(4)
 })
