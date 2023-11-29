@@ -10,7 +10,7 @@ Code challenge for mable. This is a response to the technical assignment for the
 
 ## Further Work
 
-This really just forms the basis of logice for the challenge. The missing pieces are committing the transaction and account detail to a persistant store, effecting the actual transactions with a payment provider. Also there is little to no error handling. 
+This really just forms the basis of logic for the challenge. The missing pieces are committing the transaction and account detail to a persistant store, effecting the actual transactions with a payment provider. Also there is little to no error handling. 
 
 Initial Database implementation was started but I soon realised this is probably beyond the scope of this excercise. Also I thought perhaps an Event Store would probably be a better persistant model ofr this type of work.
 
