@@ -9,6 +9,7 @@ function cleanUp() {
 async function newDb(path) {
     const database = new DataBase(path)
     await database.init()
+    return database
 }
 
 test("it loads initialises the database", async () => {
@@ -27,5 +28,18 @@ test("helper function creates new database with path", async () => {
     const exists = Fs.existsSync(dbPath)
 
     expect(exists).toBe(true)
+})
+
+test("it creates a user table", async () => {
+    const database = await newDb(dbPath)
+    await expect(database.createUserAccountTable()).resolves.not.toThrow()
+
+})
+
+test("it doesn't fail if table exists", async () => {
+    const database = await newDb(dbPath)
+    await database.createUserAccountTable()
+    await expect(database.createUserAccountTable()).resolves.not.toThrow()
+
 })
 

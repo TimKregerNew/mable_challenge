@@ -34,19 +34,23 @@ class DataBase {
         })
     }
 
-    async createUserTable() {
+    async createUserAccountTable() {
         const self = this
         return new Promise(function(resolve, reject) { 
-            self.db.run(
-                'CREATE TABLE IF NOT EXISTS user_account (id INT, balance FLOAT)', (err) => {
-                    if(err) {
-                        console.log(err.message)
-                        reject()
-                    }
-                    console.log('success')
-                    resolve()
-                }
-            )
+            try {
+                self.db.run(
+                    'CREATE TABLE IF NOT EXISTS user_account (id INT, balance FLOAT)', (err) => {
+                        if(err) {
+                        
+                        }
+                        console.log('success')
+                        resolve()
+                    })
+
+            } catch (error) {
+                console.log(error.message)
+                reject()
+            }
         })
     
 
@@ -94,7 +98,7 @@ async function test() {
     var db = new DataBase('./test.db')
 
     await db.init('./test.db')
-    await db.createUserTable()
+    await db.createUserAccountTable()
     await db.insertValue()
     await db.dumpValues()
     await db.closeDb()
