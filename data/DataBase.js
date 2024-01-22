@@ -150,7 +150,6 @@ class DataBase {
                             reject(err)
                         }
                         self.lockTransactions()
-                        console.log('success')
                         resolve()
                     })
 
@@ -180,6 +179,31 @@ class DataBase {
         })
     } 
 
+
+    async getTransaction(id) {
+        const self = this
+        return new Promise(function(resolve, reject) { 
+            try {
+                self.db.all(
+                    `SELECT * FROM transactions WHERE id = ${id}`, (err, rows) => {
+                       
+                        if(err) {
+                            return reject(err)
+                        } 
+
+                        if(rows.length < 1)
+                            return resolve(-1)
+                        
+                        const value = rows[0]
+                        return resolve(value)
+                        
+                    }
+                )
+            } catch (error) {
+                reject()
+            }
+        })
+    }
     async lockTransactions() {
         const self = this
         return new Promise(function(resolve, reject) { 
@@ -194,7 +218,6 @@ class DataBase {
                         if(err) {
                             reject(err)
                         }
-                        console.log('success')
                         resolve()
                     })
 
@@ -204,7 +227,7 @@ class DataBase {
             }
         })
     }
-    
+
     closeDb() {
         this.db.close()
     }
@@ -230,10 +253,12 @@ async function testTransactions() {
     await db.init('./test.db')
     await db.createTransactionTable()
     await db.setTransaction(3, 23, 70, 700.0, 0)
+    const transaction = await db.getTransaction(3)
+    console.log(transaction)
 
 }
 
-testTransactions()
+// testTransactions()
 
 // test()
 

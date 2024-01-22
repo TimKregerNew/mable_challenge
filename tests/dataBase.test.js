@@ -82,11 +82,16 @@ test("it will update balance", async () =>  {
     
 
 
-test("it will create transaction table", async () =>  {
+test("it will set transaction", async () =>  {
     const database = await newDb(dbPath)
     await database.createTransactionTable()
- 
-
+    await database.setTransaction(3, 23, 70, 700.0, 0)
+    const transaction = await database.getTransaction(3)
+    expect(transaction.id).toBe(3)
+    expect(transaction.src).toBe(23)
+    expect(transaction.amount).toBe(700.0)
+    expect(transaction.status).toBe(0)
 })
+
 
 
