@@ -80,6 +80,13 @@ test("it will update balance", async () =>  {
     cleanUp()
 })
     
-    
+
+
+test("it will create transaction table", async () =>  {
+    const database = await newDb(dbPath)
+    await database.createTransactionTable()
+ 
+
+})
 
 

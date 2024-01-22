@@ -140,6 +140,71 @@ class DataBase {
         })
     }
 
+    async createTransactionTable() {
+        const self = this
+        return new Promise(function(resolve, reject) { 
+            try {
+                self.db.run(
+                    'CREATE TABLE IF NOT EXISTS transactions (id INT PRIMARY KEY, src INT, dest INT, amount FLOAT, status INT)', (err) => {
+                        if(err) {
+                            reject(err)
+                        }
+                        self.lockTransactions()
+                        console.log('success')
+                        resolve()
+                    })
+
+            } catch (error) {
+                console.log(error.message)
+                reject()
+            }
+        })
+    }
+
+    async setTransaction(id, from, to, amount, status) {
+        const self = this
+        return new Promise(function(resolve, reject) { 
+            try {
+                self.db.run(
+                    `INSERT INTO transactions (id, src, dest, amount, status) VALUES (${id}, ${from}, ${to}, ${amount}, ${status})`, (err) => {
+                       
+                        if(err) {
+                            return reject(err)
+                        } 
+                        resolve()
+                    }
+                )
+            } catch (error) {
+                reject()
+            }
+        })
+    } 
+
+    async lockTransactions() {
+        const self = this
+        return new Promise(function(resolve, reject) { 
+            try {
+                self.db.run(
+                    `CREATE TRIGGER block_transaction_update
+                        BEFORE UPDATE ON transactions
+                        BEGIN
+                            SELECT RAISE(FAIL, "updates not allowed");
+                        END;
+                    `, (err) => {
+                        if(err) {
+                            reject(err)
+                        }
+                        console.log('success')
+                        resolve()
+                    })
+
+            } catch (error) {
+                console.log(error.message)
+                reject()
+            }
+        })
+    }
+    
     closeDb() {
         this.db.close()
     }
@@ -158,6 +223,17 @@ async function test() {
     await db.setStartBalanceForId(3, 900)
     await db.dumpValues()
 }
+
+
+async function testTransactions() {
+    var db = new DataBase('./test.db')
+    await db.init('./test.db')
+    await db.createTransactionTable()
+    await db.setTransaction(3, 23, 70, 700.0, 0)
+
+}
+
+testTransactions()
 
 // test()
 
