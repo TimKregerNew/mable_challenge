@@ -18,13 +18,19 @@ class DataBase {
     async init() {
         const self = this
         return new Promise(function(resolve, reject) {  
-            self.db = new sqlite3.Database('./test.db', sqlite3.OPEN_READWRITE, (err) => {
-                if(err) {
-                    reject()
-                } 
-
-                resolve()
-            })
+           
+            try {
+                self.db = new sqlite3.Database(self.path, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+                    if(err) {
+                        console.log(err) 
+                    } 
+                    resolve()
+                   
+                })
+            } catch (error) {
+                console.log(error)
+                reject()
+            }
         })
     }
 
@@ -79,19 +85,20 @@ class DataBase {
     closeDb() {
         this.db.close()
     }
+  
 }
 module.exports = { DataBase }
 
-/*
+
 async function test() {
     var db = new DataBase('./test.db')
 
-    await db.init()
+    await db.init('./test.db')
     await db.createUserTable()
     await db.insertValue()
     await db.dumpValues()
     await db.closeDb()
+
 }
 
-test()
-*/
+// test()
