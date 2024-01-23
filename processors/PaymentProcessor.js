@@ -1,16 +1,19 @@
 const { AccountLoader } = require("./AccountLoader");
 const { TransactionLoader } = require("./TransactionLoader");
 const { Payment } = require('../models/Payment');
+const { DataBase } = require('../data/DataBase')
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 class PaymentProcessor {
    transactionLoader;
    accountLoader;
    payment;
-    constructor(accountsPath, transactionPath) {
+   database;
+    constructor(database) {
         this.transactionLoader = new TransactionLoader()
         this.accountLoader = new AccountLoader()
-        this.payment =  new Payment()
+        this.database = database
+        this.payment = new Payment()
     }
 
     async process(accountsPath, transactionPath) {
@@ -18,9 +21,10 @@ class PaymentProcessor {
        await self.accountLoader.loadAccounts(accountsPath)
        await self.transactionLoader.loadPayments(transactionPath, self.accountLoader)
       
-        self.transactionLoader.transactions.forEach(function(trans) {
-            const status = self.payment.processPayment(trans, self.accountLoader)
+        self.transactionLoader.transactions.forEach(async function(trans) {
+            await self.payment.processPayment(trans, self.accountLoader, self.database)
         });
+        
     }
 
     printTransactions() {
