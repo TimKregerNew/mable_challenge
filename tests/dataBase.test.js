@@ -6,6 +6,7 @@ const dbPath = './testy.db'
 function cleanUp() {
     Fs.unlinkSync(dbPath)
 }
+
 async function newDb(path) {
     const database = new DataBase(path)
     await database.init()
@@ -80,8 +81,6 @@ test("it will update balance", async () =>  {
     cleanUp()
 })
     
-
-
 test("it will set transaction", async () =>  {
     const database = await newDb(dbPath)
     await database.createTransactionTable()

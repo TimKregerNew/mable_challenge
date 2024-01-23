@@ -4,8 +4,10 @@ const { TransactionLoader } = require("./processors/TransactionLoader");
 
 async function main() {
     const paymentprocessor = new PaymentProcessor()
-
+    await paymentprocessor.dataBaseInit()
+    
     await paymentprocessor.process(process.argv[2], process.argv[3] )
+
     console.log("ACCCOUNTS \n")
     paymentprocessor.printAccounts()
     console.log("\n\TRANSACTIONS \n")

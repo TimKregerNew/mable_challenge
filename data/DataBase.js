@@ -145,7 +145,7 @@ class DataBase {
         return new Promise(function(resolve, reject) { 
             try {
                 self.db.run(
-                    'CREATE TABLE IF NOT EXISTS transactions (id INT PRIMARY KEY, src INT, dest INT, amount FLOAT, status INT)', (err) => {
+                    'CREATE TABLE IF NOT EXISTS transactions (id STRING PRIMARY KEY, src INT, dest INT, amount FLOAT, status INT)', (err) => {
                         if(err) {
                             reject(err)
                         }
@@ -165,8 +165,8 @@ class DataBase {
         return new Promise(function(resolve, reject) { 
             try {
                 self.db.run(
-                    `INSERT INTO transactions (id, src, dest, amount, status) VALUES (${id}, ${from}, ${to}, ${amount}, ${status})`, (err) => {
-                       
+                    `INSERT INTO transactions (id, src, dest, amount, status) VALUES ('${id}', ${from}, ${to}, ${amount}, ${status})`, (err) => {
+
                         if(err) {
                             return reject(err)
                         } 
@@ -185,7 +185,7 @@ class DataBase {
         return new Promise(function(resolve, reject) { 
             try {
                 self.db.all(
-                    `SELECT * FROM transactions WHERE id = ${id}`, (err, rows) => {
+                    `SELECT * FROM transactions WHERE id = '${id}'`, (err, rows) => {
                        
                         if(err) {
                             return reject(err)
@@ -204,6 +204,7 @@ class DataBase {
             }
         })
     }
+
     async lockTransactions() {
         const self = this
         return new Promise(function(resolve, reject) { 
@@ -234,32 +235,3 @@ class DataBase {
   
 }
 module.exports = { DataBase }
-
-
-async function test() {
-    var db = new DataBase('./test.db')
-
-    await db.init('./test.db')
-    await db.createUserAccountTable()
-    await db.setStartBalanceForId(1, 700)
-    await db.setStartBalanceForId(2, 800)
-    await db.setStartBalanceForId(3, 900)
-    await db.dumpValues()
-}
-
-
-async function testTransactions() {
-    var db = new DataBase('./test.db')
-    await db.init('./test.db')
-    await db.createTransactionTable()
-    await db.setTransaction(3, 23, 70, 700.0, 0)
-    const transaction = await db.getTransaction(3)
-    console.log(transaction)
-
-}
-
-// testTransactions()
-
-// test()
-
-
