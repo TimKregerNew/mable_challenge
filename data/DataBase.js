@@ -81,7 +81,7 @@ class DataBase {
         return new Promise(function(resolve, reject) { 
             try {
                 self.db.all(
-                    `SELECT * FROM user_account WHERE id = ${id}`, (err, rows) => {
+                    `SELECT * FROM user_account WHERE id = '${id}'`, (err, rows) => {
                        
                         if(err) {
                             return reject(err)
@@ -105,7 +105,7 @@ class DataBase {
         return new Promise(function(resolve, reject) { 
             try {
                 self.db.all(
-                    `UPDATE user_account SET balance = ${balance}  WHERE id = ${id}`, (err) => {
+                    `UPDATE user_account SET balance = ${balance}  WHERE id = '${id}'`, (err) => {
                        
                         if(err) {
                             return reject(err)
@@ -149,7 +149,7 @@ class DataBase {
                         if(err) {
                             reject(err)
                         }
-                        self.lockTransactions()
+                        // self.lockTransactions()
                         resolve()
                     })
 

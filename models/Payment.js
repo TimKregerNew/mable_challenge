@@ -14,16 +14,12 @@ class Payment {
             transaction.to.deposit(amount)
             var index = 1
             if(database) {
-                // await database.setTransaction(transaction.id, transaction.from.id, transaction.to, transaction.amount, transaction.status)
-                await database.setTransaction(transaction.id, transaction.from.id, transaction.from.id, transaction.amount, transaction.status)
+               database.setTransaction(transaction.id, transaction.from.id, transaction.from.id, transaction.amount, transaction.status)
             }
         } 
         
         transaction.status = status
     }
-
-    
-
 }
 
 module.exports = { Payment: Payment }

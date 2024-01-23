@@ -6,7 +6,7 @@ const { DataBase } = require("../data/DataBase")
 const  Fs  = require('fs') 
 
 const dbPath = './payment.db'
-jest
+
 test("success if transaction successful", async () => {
     const processor = new PaymentProcessor()
     await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
@@ -50,3 +50,4 @@ test("commits successful payments to database", async () => {
     
     cleanUp()
 })
+
