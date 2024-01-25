@@ -90,6 +90,7 @@ test("it will set transaction", async () =>  {
     expect(transaction.src).toBe(23)
     expect(transaction.amount).toBe(700.0)
     expect(transaction.status).toBe(0)
+    cleanUp()
 })
 
 
