@@ -16,7 +16,15 @@ class PaymentProcessor {
         this.payment = new Payment()
     }
 
-    async process(accountsPath, transactionPath) {
+    async loadAccountsToDB(accountsPath) {
+        const self = this
+        await self.accountLoader.loadAccounts(accountsPath)
+        self.accountLoader.accounts.forEach(async function(acc) {
+            await self.database.setStartBalanceForId(acc.id, acc.balance)
+        })
+    }
+
+    async processCSVTransactions(accountsPath, transactionPath) {
         const self = this
        await self.accountLoader.loadAccounts(accountsPath)
        await self.transactionLoader.loadPayments(transactionPath, self.accountLoader)

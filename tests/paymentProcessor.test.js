@@ -9,20 +9,20 @@ const dbPath = './payment.db'
 
 test("success if transaction successful", async () => {
     const processor = new PaymentProcessor()
-    await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
+    await processor.processCSVTransactions("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
     expect(processor.accountLoader.accounts.length).toBe(5)
     expect(processor.transactionLoader.transactions.length).toBe(4)
 })
 
 test("success if transaction successful", async () => {
     const processor = new PaymentProcessor()
-    await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
+    await processor.processCSVTransactions("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
     processor.outputTransactions('./test-trans.csv')
 })
 
 test("success if transaction successful", async () => {
     const processor = new PaymentProcessor()
-    await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
+    await processor.processCSVTransactions("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
     processor.outputAccounts('./test-acc.csv')
 })
 
@@ -41,7 +41,7 @@ async function newDb(path) {
 test("commits successful payments to database", async () => {
     const db = await newDb('./payment.db')
     const processor = new PaymentProcessor(db)
-    await processor.process("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
+    await processor.processCSVTransactions("./tests/mable_acc_balance.csv", "./tests/mable_trans.csv")
  
     const trans = processor.transactionLoader.transactions[0]
     const dbTrans = await db.getTransaction(trans.id)
@@ -50,4 +50,6 @@ test("commits successful payments to database", async () => {
     
     cleanUp()
 })
+
+
 

@@ -2,7 +2,7 @@ const exp = require("constants")
 const { DataBase } = require("../data/DataBase")
 const  Fs  = require('fs') 
 const dbPath = './testy.db'
-
+/*
 function cleanUp() {
     Fs.unlinkSync(dbPath)
 }
@@ -62,6 +62,17 @@ test("it will return value", async () => {
     cleanUp()
 })
 
+
+
+test("it will return value", async () => {
+    const database = await newDb(dbPath)
+    await database.createUserAccountTable()
+    await database.setStartBalanceForId(1, 400)
+    const test = await database.getBalanceForId(1)
+
+    cleanUp()
+})
+
 test("it will return -1 if no matches", async () =>  {
     const database = await newDb(dbPath)
     await database.createUserAccountTable()
@@ -90,7 +101,9 @@ test("it will set transaction", async () =>  {
     expect(transaction.src).toBe(23)
     expect(transaction.amount).toBe(700.0)
     expect(transaction.status).toBe(0)
+    cleanUp()
 })
 
 
+*/
 

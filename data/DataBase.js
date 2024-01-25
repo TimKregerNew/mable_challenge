@@ -3,6 +3,8 @@ const fs = require("fs");
 const { isNull } = require('util');
 const { resolve } = require('path');
 const { error } = require('console');
+const { UserAcount } = require('../models/UserAccount')
+
 // This class never gets used, I couldn't the db to work. 
 // There is a test sequence at the bottom.
 
@@ -57,6 +59,30 @@ class DataBase {
 
     }
 
+    async getUserAccountForId(id) {
+        const self = this
+        return new Promise(function(resolve, reject) { 
+            try {
+                self.db.all(
+                    `SELECT * FROM user_account WHERE id = '${id}'`, (err, rows) => {
+                       
+                        if(err) {
+                            return reject(err)
+                        } 
+
+                        if(rows.length < 1)
+                            return resolve(-1)
+                        const value = rows[0]
+                        return resolve(value)
+                        
+                    }
+                )
+            } catch (error) {
+                reject()
+            }
+        })
+    }
+
     async setStartBalanceForId(id, value) {
         const self = this
         return new Promise(function(resolve, reject) { 
@@ -67,6 +93,7 @@ class DataBase {
                         if(err) {
                             return reject(err)
                         } 
+
                         resolve()
                     }
                 )
@@ -235,3 +262,4 @@ class DataBase {
   
 }
 module.exports = { DataBase }
+
